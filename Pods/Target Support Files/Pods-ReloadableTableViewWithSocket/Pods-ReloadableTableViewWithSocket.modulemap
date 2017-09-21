@@ -1,0 +1,6 @@
+framework module Pods_ReloadableTableViewWithSocket {
+  umbrella header "Pods-ReloadableTableViewWithSocket-umbrella.h"
+
+  export *
+  module * { export * }
+}
