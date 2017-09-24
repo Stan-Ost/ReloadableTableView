@@ -22,14 +22,3 @@ extension Array where Element: Hashable {
         return filteredArray
     }
 }
-
-extension Array {
-    
-    /// Converts the array to dictionary where the indexes becomes the keys
-    var indexedDictionary: [Int: Element] {
-        var result: [Int: Element] = [:]
-        enumerated().forEach({ result[$0.offset] = $0.element })
-        return result
-    }
-}
-

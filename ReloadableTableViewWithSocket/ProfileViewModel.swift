@@ -41,13 +41,13 @@ class ProfileViewModel: NSObject {
     
     weak var delegate: ProfileViewModelDelegate?
     
-    private func flatten(items: [ProfileViewModelItem]) -> ReloadableSectionData<CellItem> {
+    private func flatten(items: [ProfileViewModelItem]) -> [ReloadableSection<CellItem>] {
         let reloadableItems = items
-            .indexedDictionary
-            .map { ReloadableSection(key: $0.value.type.rawValue, value: $0.value.cellItems
-                .indexedDictionary
-                .map { ReloadableCell(key: $0.value.id, value: $0.value, index: $0.key)  }, index: $0.key) }
-        return ReloadableSectionData(items: reloadableItems)
+            .enumerated()
+            .map { ReloadableSection(key: $0.element.type.rawValue, value: $0.element.cellItems
+                .enumerated()
+                .map { ReloadableCell(key: $0.element.id, value: $0.element, index: $0.offset)  }, index: $0.offset) }
+        return reloadableItems
     }
 
     private func setup(newItems: [ProfileViewModelItem]) {

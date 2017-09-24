@@ -92,17 +92,17 @@ struct ReloadableCellData<N: Equatable> {
 }
 
 class DiffCalculator {
-    static func calculate<N>(oldItems: ReloadableSectionData<N>, newItems: ReloadableSectionData<N>) -> SectionChanges {
+    static func calculate<N>(oldItems: [ReloadableSection<N>], newItems: [ReloadableSection<N>]) -> SectionChanges {
         let sectionChanges = SectionChanges()
-        let uniqueSectionKeys = (oldItems.items + newItems.items)
+        let uniqueSectionKeys = (oldItems + newItems)
             .map { $0.key }
             .filterDuplicates()
         
         let cellChanges = CellChanges()
         
         for sectionKey in uniqueSectionKeys {
-            let oldSectionItem = oldItems[sectionKey]
-            let newSectionItem = newItems[sectionKey]
+            let oldSectionItem = ReloadableSectionData(items: oldItems)[sectionKey]
+            let newSectionItem = ReloadableSectionData(items: newItems)[sectionKey]
             if let oldSectionItem = oldSectionItem, let newSectionItem = newSectionItem {
                 if oldSectionItem != newSectionItem {
                     let oldCellIData = ReloadableCellData(items: oldSectionItem.value)
